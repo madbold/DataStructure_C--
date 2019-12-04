@@ -7,8 +7,8 @@ using namespace std;
 class Array1D
 {
 public:
-	Array1D();
-	Array1D(size_t size);
+	Array1D()= default;
+	explicit Array1D(size_t size);
 	Array1D(const char* str);
 	Array1D(const Array1D& src);
 	Array1D operator=(Array1D& src);
@@ -26,4 +26,5 @@ private:
 	size_t _size;
 	int _index;
 
+	void _assign(const Array1D& src);
 };

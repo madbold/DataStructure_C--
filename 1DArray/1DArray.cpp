@@ -1,11 +1,8 @@
 #include "1DArray.h"
 
 
- Array1D::Array1D() : _size(0), _index(-1),_str(nullptr)
-{
-	cout << " Array1D :: Array1D() >>" << endl;
-	cout << " << Array1D :: Array1D()" << endl;
-}
+
+
 Array1D::Array1D(size_t size) : _size(size)
  {
 	

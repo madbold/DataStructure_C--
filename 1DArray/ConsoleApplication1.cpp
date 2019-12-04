@@ -10,12 +10,9 @@ using namespace std;
 
 int main()
 {
-	Array1D arr= "vinod";
-	auto arr1 = arr;
-	cout <<"size:" << arr1.size();
-	arr1[2]='k';
-	cout << arr<<'\n';
-	cout << arr1 << '\n';
+	Array1D arr ;
+	cout << arr.size();
+	
 	
 	
 	return 0;
