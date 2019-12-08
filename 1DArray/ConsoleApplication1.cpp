@@ -13,7 +13,8 @@ int main()
 	//test assigment operator
 	Array1D arr ="vinod yadav";
 	Array1D arr_r ="amit c" ;
-	//arr_r = arr;
+	//swap(arr, arr_r);
+	arr_r = move(arr);
 	cout << arr.size()<<endl;
 	cout << arr << endl;
 	
@@ -22,19 +23,19 @@ int main()
 
 	// test move sementic
 
-	Array1D& ref_arr_r = arr_r;
-	auto move_cons = move(ref_arr_r); //conver rvalue ref
+	//Array1D& ref_arr_r = arr_r;
+	//auto move_cons = move(ref_arr_r); //conver rvalue ref
 
-	cout << "move cont" << move_cons <<endl;
-	cout << "arr_r state : " << arr_r << endl;
+	//cout << "move cont" << move_cons <<endl;
+	//cout << "arr_r state : " << arr_r << endl;
 
 	
-	Array1D a = "fis global faltu";
-	Array1D new1 = "hello world";
-	new1 = move(a);
+	//Array1D a = "fis global faltu";
+	//Array1D new1 = "hello world";
+	//new1 = move(a);
 
-	cout << "move assign :" << a;
-	cout << "rval_ref :" << new1;
+	//cout << "move assign :" << a;
+	//cout << "rval_ref :" << new1;
 	return 0;
 }
 

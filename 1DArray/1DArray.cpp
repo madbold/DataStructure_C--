@@ -1,5 +1,5 @@
 #include "1DArray.h"
-#include <algorithm>
+#include <utility>
 
 
 Array1D::Array1D(size_t size) : _size(size)
@@ -39,7 +39,24 @@ Array1D::Array1D(const Array1D& src)
 	cout << " << Array1D :: Array1D(const Array1D&)" <<endl;
 
 } 
+#ifndef COPY_SWAP
 
+Array1D& Array1D :: operator=(Array1D&& src)
+{
+
+	cout << " Array1D :: operator=(Array1D&& rvalue) >>" << endl;
+
+	this->_size = src._size;
+	delete[] this->_str;
+	this->_str = src._str;
+
+	src._size = {};
+	src._str = nullptr;
+
+	return *this;
+
+	cout << "<< Array1D :: operator=(Array1D&& rvalue)" << endl;
+}
 Array1D Array1D :: operator=(Array1D& src)
 {
 	cout << " Array1D :: operator=(Array1D& ) >>" << endl;
@@ -57,16 +74,32 @@ Array1D Array1D :: operator=(Array1D& src)
 	return (*this);
 	cout << " << Array1D :: operator=(Array1D& ) " <<endl;
 
-} 
+}
 
-/*Array1D& Array1D :: operator=(Array1D src)
+Array1D::Array1D(Array1D&& src)
 {
+	cout << "move ctor : Array1D( const Array1D&& src) >>" << endl;
+	cout << "array value : " << src << endl;
+	this->_size = src._size;
+	this->_str = src._str;
+
+	src._str = nullptr;
+	src._size = 0;
+	cout << " << move ctor : Array1D( const Array1D&& src)" << endl;
+}
+
+
+#else
+ Array1D& Array1D :: operator=(Array1D src)
+{
+	 
 	// this is copy-swap idiom assignment operator
 	cout << " Array1D :: operator=(Array1D --copy-swap) >>" << endl;
 	// self assignment test
 	if (this == &src)
 		return (*this);
-
+	using std::swap;
+	//swap(*this, src); // using this causes infine recursion. swap again call operator=
 	swap(this->_size,src._size);
 	swap(this->_str, src._str);
 	
@@ -74,25 +107,10 @@ Array1D Array1D :: operator=(Array1D& src)
 	return (*this);
 	
 
-} */
-
-
-Array1D& Array1D :: operator=(Array1D&& src)
-{
-
-	cout << " Array1D :: operator=(Array1D&& rvalue) >>" << endl;
-
-	this->_size = src._size;
-	delete[] this->_str;
-	this->_str = src._str; // here is memory leak , will fix later
-
-	src._size = {};
-	src._str = nullptr;
-
-	return *this;
-
-	cout << "<< Array1D :: operator=(Array1D&& rvalue)" << endl;
 } 
+
+#endif
+
 ostream& operator<<(ostream& out, const Array1D& input)
 {
 	out <<'[';
@@ -118,16 +136,6 @@ size_t Array1D:: size()
 	return this->_size;
 }
 
-Array1D::Array1D(Array1D&& src)
-{
-	cout << "move ctor : Array1D( const Array1D&& src) >>" << endl;
-	this->_size = src._size;
-	this->_str = src._str;
-
-	src._str = nullptr;
-	src._size = {};
-	cout << " << move ctor : Array1D( const Array1D&& src)" << endl;
-} 
 char& Array1D:: operator[](size_t index)
 {
 	//if (index < _size) throw exception;
